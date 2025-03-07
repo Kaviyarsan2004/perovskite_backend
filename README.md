@@ -1,1 +1,9 @@
-# perovskite_backend
+dash
+dash_bootstrap_components
+pymongo
+gunicorn
+crystal_toolkit==2023.10.24
+scipy
+robocrys
+phonopy
+pymatgen==2023.12.18
