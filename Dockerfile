@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y build-essential
 
 # Install Python dependencies
 RUN pip install -r requirements.txt
+RUN pip install uvicorn
 
 # Expose the FastAPI port (8000) and Dash port (8050)
 EXPOSE 8000 8050
