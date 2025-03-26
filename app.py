@@ -7,17 +7,15 @@ from pymatgen.core.lattice import Lattice
 from dash.dependencies import Input, Output
 from pymatgen.core.structure import Structure
 
-# Initialize Dash app with Bootstrap theme and requests pathname prefix
 dash_app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], requests_pathname_prefix='/dash/')
 
-# Connect to MongoDB
 client = MongoClient("mongodb+srv://ECD517:bing24@cluster0.6nj4o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client["CONTCAR_DATA"]
-# now we give a list of structures to pick from
+
 
 
 structures = [
-    Structure(Lattice.hexagonal(5, 3), ["Na", "Cl"], [[0, 0, 0], [0.5, 0.5, 0.5]]),
+    Structure(Lattice.hexagonal(1, 1), [], []),
 ]
 
 def update_layout(selected_dopent, number):
@@ -29,12 +27,10 @@ def update_layout(selected_dopent, number):
     structures.append(structure) 
 
 
-
 structure_component = ctc.StructureMoleculeComponent(structures[0], id="my_structure", show_expand_button=False )
 
 
 
-# and we create a button for user interaction
 my_button = html.Button(
     "Crystal Structure Viewer",
     id="change_structure_button",
@@ -50,9 +46,6 @@ my_button = html.Button(
     },
 )
 
-
-# now we have two entries in our app layout,
-# the structure component's layout and the button
 my_layout = html.Div(
     children=[
         my_button,
@@ -68,14 +61,13 @@ my_layout = html.Div(
         'flexDirection': 'column',     
         'justifyContent': 'center',   
         'alignItems': 'center',       
-        'height': '100vh',              # Ensure the div takes up full viewport height (optional)
+        'height': '100vh',             
     }
 )
 
 ctc.register_crystal_toolkit(app=dash_app, layout=my_layout)
 
 
-# for the interactivity, we use a standard Dash callback
 @dash_app.callback(
     Output(structure_component.id(), "data"),
     [Input("change_structure_button", "n_clicks")],

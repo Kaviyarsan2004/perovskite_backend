@@ -10,11 +10,9 @@ COPY . .
 # Install system dependencies
 RUN apt-get update && apt-get install -y build-essential
 
-RUN pip install --upgrade emmet-core pymatgen
-
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Expose the FastAPI port (8000) and Dash port (8050)
 EXPOSE 8000 8050
